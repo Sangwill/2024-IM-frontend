@@ -1,0 +1,131 @@
+.container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(203, 235, 241);
+}
+
+.sidebar {
+    overflow: hidden;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    width: 4rem;
+    min-width: 4rem;
+    height: 100%;
+}
+
+.sidebar_item {
+    margin: 0;
+    border: 0;
+    padding: 1rem;
+    height: 2rem;
+    width: 2rem;
+    opacity: 0.6;
+}
+.sidebar_item:hover {
+    opacity: 0.9;
+    color: white;
+}
+
+.sidebar_logo {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    height: 4rem;
+    line-height: 4rem;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.column {
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    width: 20rem;
+    min-width: 20rem;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.column_search {
+    margin: 0;
+    border: 0;
+    padding: 0;
+    height: 4rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.search_bar {
+    flex: 1;
+    height: 1rem;
+    border-radius: 0.5rem;
+    margin: 1rem;
+    padding: 0.5rem;
+    border: 0;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #444;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.chat_search_bar {
+    flex: 1;
+    height: 1rem;
+    border-radius: 0.5rem;
+    margin: 1rem 0 1rem 1rem;
+    padding: 0.5rem;
+    border: 0;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #444;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.add_button {
+    margin: 1rem;
+    border: 0;
+    padding: 0;
+    width: 2rem;
+    height: 2rem;
+}
+
+.column_item {
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 2px #dbd9d9;
+    margin: 0.5rem;
+    border: 0;
+    padding: 0;
+    height: 3.5rem;
+    line-height: 3.5rem;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.25);
+    display: flex;
+}
+.column_item:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.column_item_left {
+    height: 2rem;
+    width: 2rem;
+    margin: 0.75rem;
+    border: 0;
+    padding: 0;
+}
+
+.content {
+    overflow: hidden;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    flex: 1;
+    height: 100%;
+    min-width: 30rem;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.invisibleinput {
+    visibility: hidden;
+}
