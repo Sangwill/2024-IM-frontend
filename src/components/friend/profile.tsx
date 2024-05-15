@@ -194,6 +194,7 @@ function Profile(props: ProfileProps) {
                 <Input id={"7"} type="text"
                     onChange={(e) => { setGroup(e.target.value); }}
                     value={group}
+                    maxLength={20}
                 />
                 <Button id={"8"} onClick={() => { move(props.user_id, group); }}>
                     Move

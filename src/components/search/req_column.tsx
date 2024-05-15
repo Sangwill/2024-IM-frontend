@@ -176,7 +176,7 @@ function Column(props: ColumnProps) {
     }, []);
 
 	return (
-			<div className={styles.column}>
+			<div className={styles.column} style={{ maxHeight: "600px", overflowY: "auto" }}>
 				<FriendList send_list={send} receive_list={receive} setProfile={props.setProfile}/>
 			</div>
 		)

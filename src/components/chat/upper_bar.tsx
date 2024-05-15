@@ -6,15 +6,15 @@ import { store } from "@/utils/store";
 
 
 const CreateSession = (props: any) => {
-
     const [load, setLoad] = useState(true);
     const [friends, setFriends] = useState<any[]>([]);
-    const [selected, setSelected] = useState([-1]);
-    const [isButtonDisabled, setDisable] = useState(false);
+    const [selected, setSelected] = useState<number[]>([-1]);
+    const [isButtonDisabled, setDisable] = useState(true); // 初始为 true 禁用按钮
     const [name, setName] = useState('');
     const header = {
         Authorization: store.getState().token,
     };
+
     useEffect(() => {
         request(
             "GET",
@@ -23,36 +23,41 @@ const CreateSession = (props: any) => {
             header
         ).then((res: any) => {
             const groups = res.groups;
-                let friends = [];
-                for (const group of groups) {
-                    for (const friend of group.group_friends) {
-                        friends.push(friend);
-                    }
+            let friends = [];
+            for (const group of groups) {
+                for (const friend of group.group_friends) {
+                    friends.push(friend);
                 }
-                setFriends(friends);
+            }
+            setFriends(friends);
             setLoad(false);
-        })}, [props.open]);
+        });
+    }, [props.open]);
+
+    useEffect(() => {
+        // 根据 name 的长度设置按钮的禁用状态
+        setDisable(name.length < 1 || name.length > 20);
+    }, [name]);
 
     const handleOk = () => {
+        if (isButtonDisabled) return; // 如果按钮禁用，直接返回
         message.success("创建成功");
         setDisable(true);
         const member_ids = selected.filter((each: any) => each !== -1);
         request(
             "POST",
             "user/create_group_conversation",
-            JSON.stringify(
-                {
-                    members_id: [...member_ids],
-                    name: name,
-                },
-            ),
+            JSON.stringify({
+                members_id: [...member_ids],
+                name: name,
+            }),
             header
         ).then((res: any) => {
             setDisable(false);
             props.setOpen(false);
             props.setRefresh((s: any) => !s);
         });
-    }
+    };
 
     const handleCancel = () => {
         props.setOpen(false);
@@ -63,38 +68,40 @@ const CreateSession = (props: any) => {
             if (e.target.checked) setSelected((selected: number[]) => [...selected, item.friend_id]);
             else setSelected((selected: any) => selected.filter((x: any) => x !== item.friend_id));
         };
-    }
+    };
+
     return (
-
-        <Modal title={"选择好友创建一个群聊"} open={props.open} onOk={handleOk} onCancel={handleCancel}
-               okButtonProps={{ disabled: isButtonDisabled }}>
-            {load
-                ?
-                (
-                    <div>
-                    </div>
-                    )
-                :
-                (
-                    <div>
-                        输入群聊名称:<Input onChange={(e: any) => setName(e.target.value)}></Input>
-                        <List
-                            itemLayout="vertical"
-                            size="large"
-                            // pagination={{pageSize: 3,}}
-                            dataSource={friends}
-                            renderItem={(item: any) => (
-                                <List.Item key={item.friend_id}>
-                                    <Checkbox onChange={onChange(item)}>
-                                    </Checkbox>
-                                    {item.friend_name}
-                                </List.Item>
-                            )}
-                        />
-                    </div>
-                )}
+        <Modal
+            title={"选择好友创建一个群聊"}
+            open={props.open}
+            onOk={handleOk}
+            onCancel={handleCancel}
+            okButtonProps={{ disabled: isButtonDisabled }}
+        >
+            {load ? (
+                <div>Loading...</div>
+            ) : (
+                <div>
+                    输入群聊名称:
+                    <Input
+                        onChange={(e: any) => setName(e.target.value)}
+                        minLength={1}
+                        maxLength={20}
+                    />
+                    <List
+                        itemLayout="vertical"
+                        size="large"
+                        dataSource={friends}
+                        renderItem={(item: any) => (
+                            <List.Item key={item.friend_id}>
+                                <Checkbox onChange={onChange(item)}></Checkbox>
+                                {item.friend_name}
+                            </List.Item>
+                        )}
+                    />
+                </div>
+            )}
         </Modal>
-
     );
 };
 

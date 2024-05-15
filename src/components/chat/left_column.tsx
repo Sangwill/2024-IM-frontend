@@ -145,7 +145,7 @@ const LeftColumn = (props: any) => {
     }
 
     return (
-        <div>
+        <div style={{ maxHeight: "600px", overflowY: "auto" }}>
             {
                 props.list.map((conversation: any) => (
                     <div key={conversation.conversation_id} onClick={handleClick(conversation)}>
