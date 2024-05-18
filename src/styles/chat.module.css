@@ -25,6 +25,13 @@
     flex-direction: column;
 }
 
+.input {
+    border-radius: 20px; /* 圆角半径 */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    border: 1px solid #ccc; /* 边框颜色和宽度 */
+    background-color: rgb(240, 250, 252);
+}
+
 .column_item_left {
     height: 2rem;
     width: 2rem;
@@ -49,6 +56,7 @@
     word-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.08);
 }
 
 .single_msg{
@@ -90,6 +98,7 @@
     word-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -188,6 +197,7 @@
     background-color: rgba(255, 255, 255, 0.25);
     display: flex;
     flex-direction: row;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.08);
 }
 .message_item:hover {
     background-color: rgba(255, 255, 255, 0.5);

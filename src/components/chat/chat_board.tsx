@@ -112,7 +112,33 @@ const ChatBoard = (props: any) => {
             }
         }
     };
- 
+    
+    const handleMember = (res: any) => {
+        res = JSON.parse(res.data);
+        if (res.conversation_id === props.conversation.conversation_id) {
+            if (res.type === 'new') {
+                message.info("新成员 " + res.member_name + " 被邀请进入群聊");
+                setMembers((members: any) => {
+                    const new_member = {
+                        member_id: res.member_id,
+                        member_name: res.member_name,
+                        member_avatar: res.member_avatar,
+                    };
+                    return [...members, new_member];
+                });
+                setLastReadMap(res.last_read_map);
+                store.dispatch({type: "addImage", data: {key: res.member_id, value: res.member_avatar}});
+                store.dispatch({type: "addMember", data: {mem_key: res.member_id, mem_value: res.member_name}});
+            } else if (res.type === 'quit') {
+                setLastReadMap(res.last_read_map);
+                //  重新设定members
+                setMembers((members: []) => {
+                    return members.filter((member: any) => member.member_id !== res.member_id);
+                });
+            }
+        }
+    }
+
     const handleSend = (res: any) => {
         res = JSON.parse(res.data);
         if (res.type === 'notify') {
@@ -131,7 +157,7 @@ const ChatBoard = (props: any) => {
                                 sender_id: res.sender_id,
                                 sender_name: res.sender_name,
                                 create_time: res.timestamp,
-                                sender_avatar: res.sender_avatar,   
+                                sender_avatar: store.getState().memberMap[res.sender_id],   
                                 reply_to: res.reply_to,
                                 //reply: res.reply_to,
                             }
@@ -146,7 +172,7 @@ const ChatBoard = (props: any) => {
                             sender_id: res.sender_id,
                             sender_name: res.sender_name,
                             create_time: res.timestamp,
-                            sender_avatar: res.sender_avatar,   
+                            sender_avatar: store.getState().memberMap[res.sender_id],   
                             reply_to: res.reply_to,
                         };
                     
@@ -262,6 +288,8 @@ const ChatBoard = (props: any) => {
                 console.log("socket addeventlistener");
                 socket.removeEventListener('message', handleSend);
                 socket.addEventListener("message", handleSend);
+                socket.removeEventListener('message', handleMember);
+                socket.addEventListener("message", handleMember);
             }
     
             // if (store.getState().message[props.conversation.conversation_id]) {
@@ -273,7 +301,7 @@ const ChatBoard = (props: any) => {
         return () => {
             if (socket && socket.removeEventListener) {
                 socket.removeEventListener('message', handleSend);
-                
+                socket.removeEventListener('message', handleMember);
             }// 检查 socket 和 removeEventListener 方法是否存在
         };
     }, [props.conversation.conversation_id, store.getState().webSocket,props.list,props.groups]);
@@ -299,7 +327,10 @@ const ChatBoard = (props: any) => {
                 for (const each of response.members) {
                     store.dispatch({type: "addImage", data: {key: each.member_id, value: each.member_avatar}});
                     store.dispatch({type: "addMember", data: {mem_key: each.member_id, mem_value: each.member_name}});
-                    
+                }
+                for (const each of response.history_members) {
+                    store.dispatch({type: "addImage", data: {key: each.member_id, value: each.member_avatar}});
+                    store.dispatch({type: "addMember", data: {mem_key: each.member_id, mem_value: each.member_name}});
                 }
             }}
             else {

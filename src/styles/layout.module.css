@@ -2,7 +2,7 @@
     display: flex;
     height: 100%;
     width: 100%;
-    background-color: rgb(203, 235, 241);
+    background-color: rgb(230, 244, 252);
 }
 
 .sidebar {
@@ -123,7 +123,7 @@
     flex: 1;
     height: 100%;
     min-width: 30rem;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0);
 }
 
 .invisibleinput {

@@ -115,29 +115,7 @@ const DeleteFriend = async (id: number) => {
     }
 };
 
-const createchat = async (id: number) => {
-    const header = {
-        Authorization: store.getState().token,
-    };
-    try {
-        const response = await request(
-            "POST",
-            "user/create_private_conversation",
-            JSON.stringify({
-                friend_id: id,
-            }),
-            header
-        );
-        if (response.code === 0) {
-            message.success("created");
-        }
-        console.log(response);
-       // location.reload();
-    }
- catch(err) {
-        console.log(err);
-    }
-}
+
 
 function Profile(props: ProfileProps) {
     const operation: any[] = [];
@@ -179,15 +157,11 @@ function Profile(props: ProfileProps) {
     const friend_buttons = (props.req_type === "friend") && (
         <div>
             <div style={{ display: "flex", flexDirection: "row" }}>
-                <br />
+                
                 <Button id={"4"} style={{ marginRight: "10px" }} onClick={() => { DeleteFriend(props.user_id); }}>
                     Delete
                 </Button>
-                <br />
-                <Button id={"5"} style={{ marginLeft: "10px" }} onClick={() => { createchat(props.user_id)}}>
-                    Chat
-                </Button>
-                <br />
+                
             </div>
             <br />
             <div id={"6"} style={{display: "flex"}}>

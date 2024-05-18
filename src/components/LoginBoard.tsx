@@ -105,7 +105,8 @@ const LoginBoard = (props:any) => {
    
 
     return (
-        <ProConfigProvider hashed={false}>
+        <div>
+            <ProConfigProvider hashed={false}>
             <div style={{ backgroundColor: "white" }}>
                 <LoginForm
                     title="IM Chat"
@@ -114,13 +115,15 @@ const LoginBoard = (props:any) => {
                     onFinish={handleUserSubmit}
                 >
                     <LoginInput form={form} loginType={loginType} setLoginType={setLoginType}/>
-                </LoginForm>
+                </LoginForm>           
             </div>
             <div style={{float: "right", fontSize: "14px"}}>
                                 没有账号？
                             <a onClick={()=>router.push("/register")}>注册一个！</a>
                             </div>
         </ProConfigProvider>
+        </div>
+       
     );
 };
 

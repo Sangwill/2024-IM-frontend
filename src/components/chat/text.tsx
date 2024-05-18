@@ -117,7 +117,9 @@ const TextBoard = (props: any) => {
                     </div>
                 )
             }
+            <div className={styles.input}>
             <Input.TextArea
+                maxLength={1500}
                 className={styles.input}
                 value={text} 
                 onChange={(e) => setText(e.target.value)} 
@@ -139,6 +141,8 @@ const TextBoard = (props: any) => {
                 rows={3}
                 autoSize={false} // 关闭自动调整大小
             />
+            </div>
+            
             <div className={styles.send}>
                 <Button onClick={handleClick} >发送</Button>
             </div>

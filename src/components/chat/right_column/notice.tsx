@@ -38,6 +38,7 @@ const NoticeSetter = (props: any) => {
         <Modal title={"设置群公告"} open={props.open} onOk={handleOk} onCancel={handleCancel} width={800}>
             <Divider />
             <Input.TextArea
+                maxLength={1000}
                 className={styles.input}
                 value={text} 
                 onChange={(e) => setText(e.target.value)} 

@@ -125,6 +125,16 @@ const ChatHistory = (props: any) => {
         },
     ];
 
+    const private_items: MenuProps['items'] = [
+        {
+            label: '所有',
+            key: 'all',
+        },{
+            label: '按时间顺序',
+            key: 'time',
+        }, 
+    ];
+
     const [current, setCurrent] = useState('all');
     const handleOk = () => props.setOpen(false);
     const handleCancel = () => props.setOpen(false);
@@ -133,7 +143,7 @@ const ChatHistory = (props: any) => {
     return (
         <Modal title={"筛选聊天记录"} open={props.open} onOk={handleOk} onCancel={handleCancel} width={800}>
             <Divider />
-            <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
+            <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={props.conversation.is_group?items:private_items} />
             <br />
             {current === 'all'
                 ? <AllPicker members={props.members} messages={props.messages} images={props.images}/>
