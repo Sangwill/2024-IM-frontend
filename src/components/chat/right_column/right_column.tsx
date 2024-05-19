@@ -117,21 +117,33 @@ const RightColumn = (props: any) => {
                 // 取消删除，不做任何操作
             },
         });
-     }
+    }
+    const groupName = props.conversation.name.length > 10 
+        ? props.conversation.name.substring(0, 10) + '...' 
+        : props.conversation.name;
+    
     return <div id="mySidenav" className={styles.sidenav}>
-        <Divider>
-            {props.conversation.is_group ?
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+            {props.conversation.is_group ? (
                 <div>
+                    
                     <Divider>
-                        群聊名称：{props.conversation.name}
+                        群聊名称：{groupName}
                     </Divider>
+                    
                     <Divider>
-                        群成员：{<UserList conversation={props.conversation} setConversation={props.setConversation}/>}
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                群成员：
+                                <UserList conversation={props.conversation} setConversation={props.setConversation} />
+                            </div>
+                        </div>
                     </Divider>
-                </div> :
-                <div>
-                </div>}
-        </Divider>
+                </div>
+            ) : (
+                <div></div>
+            )}
+        </div>
         <div onClick={handleHistory}>
             消息记录
             <RightOutlined />
